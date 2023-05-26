@@ -18,26 +18,27 @@ class SnakeModel(Model):
             raise RuntimeError("SnakeModel play_grid cannot be None")
         self._play_grid = play_grid
         self._direction = SnakeModel.Direction.RIGHT
+        self._last_direction = self._direction
         self._sprites = []
         self._elements = []
 
         def handle_up_arrow():
-            if self._direction != SnakeModel.Direction.DOWN:
+            if self._last_direction != SnakeModel.Direction.DOWN:
                 self._direction = SnakeModel.Direction.UP
             return
 
         def handle_down_arrow():
-            if self._direction != SnakeModel.Direction.UP:
+            if self._last_direction != SnakeModel.Direction.UP:
                 self._direction = SnakeModel.Direction.DOWN
             return
 
         def handle_left_arrow():
-            if self._direction != SnakeModel.Direction.RIGHT:
+            if self._last_direction != SnakeModel.Direction.RIGHT:
                 self._direction = SnakeModel.Direction.LEFT
             return
 
         def handle_right_arrow():
-            if self._direction != SnakeModel.Direction.LEFT:
+            if self._last_direction != SnakeModel.Direction.LEFT:
                 self._direction = SnakeModel.Direction.RIGHT
             return
 
@@ -81,6 +82,7 @@ class SnakeModel(Model):
         new_element = GridElement(sprite=new_sprite, grid=self._play_grid, grid_tiles=tile_in_front)
         self._sprites.append(new_sprite)
         self._elements.append(new_element)
+        self._last_direction = self._direction
         return
 
     def move(self):
@@ -93,6 +95,7 @@ class SnakeModel(Model):
 
         self._sprites.append(tail_tip_sprite)
         self._elements.append(tail_tip_element)
+        self._last_direction = self._direction
         return
 
     def collides_with(self, grid_tiles):
