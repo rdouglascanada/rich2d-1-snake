@@ -2,6 +2,7 @@ from rich2d.models import Model
 from rich2d.sprites.shapes import Rectangle
 from rich2d.elements.grid import Grid, GridElement
 from rich2d.sprites import Text
+from game import ScoreElement
 
 
 def snake_play_screen(window_width, window_height):
@@ -29,19 +30,20 @@ def snake_play_screen(window_width, window_height):
     score_label_text = Text(text="Score:", rect=(0, 0, 0, 0), colour="black",
                             font_name="courier", font_size=32, font_bold=True,
                             horizontal_alignment=Text.HorizontalAlignment.RIGHT)
-    score_label_text_element = GridElement(sprite=score_label_text, grid=status_grid,
+    score_label_grid_element = GridElement(sprite=score_label_text, grid=status_grid,
                                            grid_tiles=(0, 0, 5, 2))
 
-    score_text = Text(text="0", rect=(0, 0, 0, 0), colour="black",
+    score_text = Text(text="", rect=(0, 0, 0, 0), colour="black",
                       font_name="courier", font_size=32, font_bold=True,
                       horizontal_alignment=Text.HorizontalAlignment.CENTRE)
-    score_text_element = GridElement(sprite=score_text, grid=status_grid,
-                                     grid_tiles=(6, 0, 1, 2))
+    score_text_grid_element = GridElement(sprite=score_text, grid=status_grid,
+                                          grid_tiles=(6, 0, 1, 2))
+    score_sync_element = ScoreElement(score_text_sprite=score_text, score=0)
 
     sprites = [play_background, top_boundary, left_boundary, right_boundary, bottom_boundary,
                score_label_text, score_text]
     elements = [play_background_element, top_boundary_element, left_boundary_element,
                 right_boundary_element, bottom_boundary_element,
-                score_label_text_element, score_text_element]
+                score_label_grid_element, score_text_grid_element, score_sync_element]
     handlers = []
     return Model(sprites=sprites, elements=elements, handlers=handlers)
