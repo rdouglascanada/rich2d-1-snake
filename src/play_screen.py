@@ -2,7 +2,7 @@ from rich2d.models import Model, ModelGroup
 from rich2d.sprites.shapes import Rectangle, Circle
 from rich2d.elements.grid import Grid, GridElement
 from rich2d.sprites import Text
-from game import ScoreElement, SnakeModel
+from game import ScoreElement, SnakeModel, GameLogicElement
 
 
 def snake_play_screen(window_width, window_height):
@@ -44,12 +44,19 @@ def snake_play_screen(window_width, window_height):
     score_sync_element = ScoreElement(score_text_sprite=score_text, score=0)
 
     snake_model = SnakeModel(play_grid=play_grid)
+    snake_model.start_game()
+    boundary_tiles_list = tuple([top_boundary_element.get_grid_tiles(), left_boundary_element.get_grid_tiles(),
+                                 right_boundary_element.get_grid_tiles(), bottom_boundary_element.get_grid_tiles()])
+    game_logic_element = GameLogicElement(play_grid=play_grid, snake_model=snake_model,
+                                          boundary_tiles_list=boundary_tiles_list,
+                                          food_tile=food_element.get_grid_tiles(),
+                                          score_element=score_sync_element)
 
     sprites = [play_background, top_boundary, left_boundary, right_boundary, bottom_boundary,
                score_label_text, score_text, food_sprite]
     elements = [play_background_element, top_boundary_element, left_boundary_element,
                 right_boundary_element, bottom_boundary_element, food_element,
-                score_label_grid_element, score_text_grid_element, score_sync_element]
+                score_label_grid_element, score_text_grid_element, game_logic_element, score_sync_element]
     handlers = []
     play_model = ModelGroup(models=[Model(sprites=sprites, elements=elements, handlers=handlers), snake_model])
     return play_model
