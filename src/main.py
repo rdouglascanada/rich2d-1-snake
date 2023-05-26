@@ -1,7 +1,7 @@
 from rich2d.game import Game, GameConfig
 from rich2d.models.state import State, StateModel
-from title_model import SnakeTitleModel
-from play_model import SnakePlayModel
+from title_screen import snake_title_screen
+from play_screen import snake_play_screen
 
 window_width = 600
 window_height = 700
@@ -9,8 +9,8 @@ game_config = GameConfig(window_width=window_width, window_height=window_height,
                          window_title="Snake", background_colour="white")
 
 game_state = State(value="title")
-title_model = SnakeTitleModel(game_state, window_width, window_height)
-play_model = SnakePlayModel(game_state, window_width, window_height)
+title_model = snake_title_screen(game_state, window_width, window_height)
+play_model = snake_play_screen(window_width, window_height)
 
 game_state_map = {'title': title_model, 'play': play_model}
 game_model = StateModel(state=game_state, state_map=game_state_map)
