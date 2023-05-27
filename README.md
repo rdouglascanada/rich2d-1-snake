@@ -6,3 +6,10 @@ the Rich2D engine
 This project depends on Rich2D
 ( https://github.com/rdouglascanada/rich2d )
 
+## Build
+To compile the project into an executable, install 
+[pyinstaller](https://pyinstaller.org/en/stable/installation.html)
+and then run
+
+`pyinstaller -F src/main.py --noconsole --name snake.exe --distpath releases`
+
